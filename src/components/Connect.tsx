@@ -52,21 +52,9 @@ export function Connect({}: ConnectProps) {
     return (
         <div>
             {!connected && (
-                <button
-                    onClick={connect}
-                    className="px-4 py-2 bg-blue-500 text-white rounded"
-                >
-                    Connect to Meshcore Device
-                </button>
+                <button onClick={connect}>Connect to Meshcore Device</button>
             )}
-            {!!connected && (
-                <button
-                    onClick={disconnect}
-                    className="px-4 py-2 bg-red-500 text-white rounded"
-                >
-                    Disconnect
-                </button>
-            )}
+            {!!connected && <button onClick={disconnect}>Disconnect</button>}
             <StatsTable
                 title="Messages by Hops"
                 stats={stats.byHops}
@@ -88,11 +76,7 @@ export function Connect({}: ConnectProps) {
 
             <div>
                 {log.map((entry, index) => (
-                    <pre
-                        key={index}
-                        className="text-sm text-gray-700"
-                        style={{ whiteSpace: "pre-wrap" }}
-                    >
+                    <pre key={index} style={{ whiteSpace: "pre-wrap" }}>
                         {entry}
                     </pre>
                 ))}

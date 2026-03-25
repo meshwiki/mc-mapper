@@ -17,7 +17,7 @@ export function StatsTable<S extends object>({
     columns,
 }: StatsTableProps<S>) {
     return (
-        <table className="w-full">
+        <table>
             <caption>{title}</caption>
             <thead>
                 <tr>
