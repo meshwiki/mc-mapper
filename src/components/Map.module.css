@@ -2,7 +2,11 @@
     width: 100vw;
     flex: 1;
     position: relative;
-    /* position: absolute;
-    left: 0;
-    top: 0; */
+}
+
+.SnapButton {
+    position: absolute;
+    top: 110px;
+    right: 10px;
+    z-index: 1;
 }

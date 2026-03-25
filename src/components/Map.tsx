@@ -10,6 +10,7 @@ import * as THREE from "three";
 import { Line2 } from "three/addons/lines/Line2.js";
 import { LineGeometry } from "three/addons/lines/LineGeometry.js";
 import { LineMaterial } from "three/addons/lines/LineMaterial.js";
+import { MdLocationSearching, MdMyLocation } from "react-icons/md";
 
 import { useGeoLocation } from "@/hooks/useGeoLocation";
 
@@ -91,6 +92,7 @@ type MapProps = {
 export default function RSSIMap({ data }: MapProps) {
     const mapRef = React.useRef<MapRef | null>(null);
     const location = useGeoLocation();
+    const [snapped, setSnapped] = React.useState(true);
 
     const sceneRef = React.useRef<THREE.Scene>(null);
     const cameraRef = React.useRef<THREE.Camera>(null);
@@ -176,13 +178,13 @@ export default function RSSIMap({ data }: MapProps) {
     }, [data]);
 
     React.useEffect(() => {
-        if (location && mapRef.current) {
+        if (location && mapRef.current && snapped) {
             mapRef.current.flyTo({
                 center: [location.coords.longitude, location.coords.latitude],
                 duration: 2000,
             });
         }
-    }, [location]);
+    }, [location, snapped]);
 
     return (
         <div className={styles.MapContainer}>
@@ -228,6 +230,12 @@ export default function RSSIMap({ data }: MapProps) {
                 onLoad={handleMapLoad}
             >
                 <NavigationControl position="top-right" />
+                <button
+                    className={styles.SnapButton}
+                    onClick={() => setSnapped((s) => !s)}
+                >
+                    {snapped ? <MdMyLocation /> : <MdLocationSearching />}
+                </button>
             </Map>
         </div>
     );
