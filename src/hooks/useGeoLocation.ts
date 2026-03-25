@@ -7,9 +7,13 @@ export function useGeoLocation() {
 
     React.useEffect(() => {
         if (navigator.geolocation) {
-            const id = navigator.geolocation.watchPosition((position) => {
-                setLocation(position);
-            });
+            const id = navigator.geolocation.watchPosition(
+                (position) => {
+                    setLocation(position);
+                },
+                null,
+                { enableHighAccuracy: true }
+            );
             return () => navigator.geolocation.clearWatch(id);
         } else {
             console.error("Geolocation is not supported by this browser.");
