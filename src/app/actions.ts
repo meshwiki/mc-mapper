@@ -26,11 +26,13 @@ function connect() {
 //     return client;
 // }
 
-export async function getData() {
+export async function getData(): Promise<any[]> {
     const crateClient = connect();
 
-    const res = await crateClient.execute("SELECT * FROM doc.rxlog");
-    return res;
+    const res = await crateClient.execute(
+        `SELECT id, rssi, snr, stamp, "lastRepeater", location['latitude'] as lat, location['longitude'] as lng  FROM doc.rxlog`
+    );
+    return res.json;
 }
 
 export async function pushData(data: RxLog, info: SelfInfo | null) {
