@@ -13,8 +13,10 @@ import { useGeoLocation } from "@/hooks/useGeoLocation";
 import styles from "./Connect.module.css";
 import { MdBluetoothConnected, MdQueryStats } from "react-icons/md";
 
-interface ConnectProps {}
-export function Connect({}: ConnectProps) {
+interface ConnectProps {
+    onData?: (data: RxLog) => void;
+}
+export function Connect({ onData }: ConnectProps) {
     const [log, setLog] = React.useState<string[]>([]);
     const location = useGeoLocation();
     const [showStats, setShowStats] = React.useState(false);
@@ -47,6 +49,7 @@ export function Connect({}: ConnectProps) {
                 stamp: new Date().toISOString(),
             };
             pushData(data, info);
+            onData?.(data);
 
             appendLog(`Received LogRxData: ${JSON.stringify(data, null, 2)}`);
         }

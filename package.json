@@ -10,6 +10,7 @@
     },
     "dependencies": {
         "@liamcottle/meshcore.js": "^1.13.0",
+        "@rkmodules/use-inner": "^1.0.3",
         "classnames": "^2.5.1",
         "maplibre-gl": "^5.21.1",
         "next": "16.2.1",
