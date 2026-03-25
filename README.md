@@ -18,6 +18,8 @@ Open [https://localhost:3000](https://localhost:3000) with your browser to see t
 
 # MC-Mapper
 
+Visit on mobile on https://mc-mapper.vercel.app/
+
 MC-Mapper is part of the [meshcore digital twin project](https://github.com/meshwiki/digitwin)
 
 This project was heavily inspired by https://mapme.sh and collects raw statistical data from a meshcore companion using [meshcore.js](https://github.com/meshcore-dev/meshcore.js)
