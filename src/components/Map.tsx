@@ -101,7 +101,7 @@ export default function RSSIMap({ data }: MapProps) {
 
     const handleMapLoad = React.useCallback((e: MapLibreEvent) => {
         const map = e.target;
-        console.log("map loaded", map);
+        // console.log("map loaded", map);
         if (map.getLayer("rssi-layer")) return;
 
         const layer = {
@@ -179,9 +179,6 @@ export default function RSSIMap({ data }: MapProps) {
         if (location && mapRef.current) {
             mapRef.current.flyTo({
                 center: [location.coords.longitude, location.coords.latitude],
-                zoom: 15,
-                pitch: 85,
-                bearing: 0,
                 duration: 2000,
             });
         }
@@ -196,7 +193,7 @@ export default function RSSIMap({ data }: MapProps) {
                     longitude: location?.coords.longitude ?? 5.12,
                     latitude: location?.coords.latitude ?? 52.09,
                     zoom: 13,
-                    pitch: 85,
+                    pitch: 75,
                     bearing: 0,
                 }}
                 style={{
