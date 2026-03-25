@@ -19,8 +19,8 @@ export function Connect({}: ConnectProps) {
     const location = useGeoLocation();
     const [showStats, setShowStats] = React.useState(false);
 
-    const { connect, connected, last, info, disconnect } = useMc();
-    const stats = useRxStats(last);
+    const { connect, connected, last, info, disconnect, stats } = useMc();
+    const rxstats = useRxStats(last);
 
     function appendLog(message: string) {
         setLog((prevLog) => [message, ...prevLog].slice(0, 100)); // Keep only the last 100 log entries
@@ -40,6 +40,7 @@ export function Connect({}: ConnectProps) {
             console.log("location", loc);
             const data: RxLog = {
                 ...last,
+                noiseFloor: stats?.data.noiseFloor || last.noiseFloor,
                 location: loc,
                 stamp: new Date().toISOString(),
             };
@@ -80,19 +81,19 @@ export function Connect({}: ConnectProps) {
                 <div className={styles.Stats}>
                     <StatsTable
                         title="Messages by Hops"
-                        stats={stats.byHops}
+                        stats={rxstats.byHops}
                         bin="hops"
                         columns={["total"]}
                     />
                     <StatsTable
                         title="Messages by Type"
-                        stats={stats.byType}
+                        stats={rxstats.byType}
                         bin="hops"
                         columns={["total"]}
                     />
                     <StatsTable
                         title="Messages by Last Repeater"
-                        stats={stats.byRepeater}
+                        stats={rxstats.byRepeater}
                         bin="rp"
                         columns={["total", "withScope", "avgRssi", "avgSnr"]}
                     />

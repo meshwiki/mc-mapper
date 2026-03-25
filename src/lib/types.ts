@@ -1,7 +1,20 @@
 import type { Connection } from "@liamcottle/meshcore.js";
 
+export interface Stats<S> {
+    type: number;
+    raw: Uint8Array;
+    data: S;
+}
+export interface StatsRadio {
+    noiseFloor: number;
+    lastRssi: number;
+    lastSnr: number;
+    txAirSecs: number;
+    rxAirSecs: number;
+}
 export interface WebBleConnection extends Connection {
     init: () => Promise<void>;
+    getStatsRadio: () => Promise<Stats<StatsRadio>>;
 }
 
 export enum ResponseCodes {

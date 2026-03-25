@@ -4,6 +4,8 @@ import {
     LogRxDetails,
     ResponseCodes,
     SelfInfo,
+    Stats,
+    StatsRadio,
     WebBleConnection,
 } from "./types";
 import { parseRxData, toHex } from "./parsers/RxData";
@@ -28,6 +30,7 @@ export function useMc() {
     const [connected, setConnected] = React.useState(false);
     const [conn, setConn] = React.useState<WebBleConnection | null>(null);
     const [info, setInfo] = React.useState<SelfInfo | null>(null);
+    const [stats, setStats] = React.useState<Stats<StatsRadio> | null>(null);
 
     const connect = React.useCallback(async () => {
         try {
@@ -54,10 +57,13 @@ export function useMc() {
             // });
 
             connection.on(ResponseCodes.LogRxData, async (data: LogRxData) => {
-                console.log("LogRxData", data);
+                // console.log("LogRxData", data);
+
+                const stats = await connection.getStatsRadio();
 
                 const parsed = parseRxData(data);
                 setLast(parsed);
+                setStats(stats);
             });
 
             // connection.on(ResponseCodes.RawData, (message: unknown) => {
@@ -89,6 +95,7 @@ export function useMc() {
     return {
         info,
         last,
+        stats,
         connected,
         connect,
         disconnect,
