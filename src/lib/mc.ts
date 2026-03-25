@@ -3,9 +3,10 @@ import {
     LogRxData,
     LogRxDetails,
     ResponseCodes,
+    SelfInfo,
     WebBleConnection,
 } from "./types";
-import { parseRxData } from "./parsers/RxData";
+import { parseRxData, toHex } from "./parsers/RxData";
 
 async function createConnection() {
     // IMPORTANT: do NOT import "@liamcottle/meshcore.js" (root). It drags in node transports.
@@ -26,12 +27,20 @@ export function useMc() {
     const [last, setLast] = React.useState<LogRxDetails | null>(null);
     const [connected, setConnected] = React.useState(false);
     const [conn, setConn] = React.useState<WebBleConnection | null>(null);
+    const [info, setInfo] = React.useState<SelfInfo | null>(null);
 
     const connect = React.useCallback(async () => {
         try {
             const connection = await createConnection();
-            connection.on("connected", () => {
+            connection.on("connected", async () => {
                 setConnected(true);
+
+                const info = (await connection.getSelfInfo()) as any;
+                setInfo({
+                    ...info,
+                    publicKey: toHex(info.publicKey),
+                    reserved: toHex(info.reserved),
+                });
             });
 
             // connection.on("rx", (message: Uint8Array) => {
@@ -78,6 +87,7 @@ export function useMc() {
     }, [conn]);
 
     return {
+        info,
         last,
         connected,
         connect,

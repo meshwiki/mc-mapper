@@ -13,7 +13,7 @@ export function Connect({}: ConnectProps) {
     const [log, setLog] = React.useState<string[]>([]);
     const location = useGeoLocation();
 
-    const { connect, connected, last, disconnect } = useMc();
+    const { connect, connected, last, info, disconnect } = useMc();
     const stats = useRxStats(last);
 
     function appendLog(message: string) {
@@ -37,11 +37,17 @@ export function Connect({}: ConnectProps) {
                 location: loc,
                 stamp: new Date().toISOString(),
             };
-            pushData(data);
+            pushData(data, info);
 
             appendLog(`Received LogRxData: ${JSON.stringify(data, null, 2)}`);
         }
     }, [last]);
+
+    React.useEffect(() => {
+        if (info) {
+            appendLog(`Received SelfInfo: ${JSON.stringify(info, null, 2)}`);
+        }
+    }, [info]);
 
     return (
         <div>

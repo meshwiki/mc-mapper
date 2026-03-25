@@ -1,5 +1,5 @@
 "use server";
-import { RxLog } from "@/lib/types";
+import { RxLog, SelfInfo } from "@/lib/types";
 import crate from "node-crate";
 
 // using node-crate
@@ -33,8 +33,11 @@ export async function getData() {
     return res;
 }
 
-export async function pushData(data: RxLog) {
+export async function pushData(data: RxLog, info: SelfInfo | null) {
     const crateClient = connect();
     // console.log("Inserting data into CrateDB:", data);
-    await crateClient.insert("doc.rxlog", data);
+    await crateClient.insert("doc.rxlog", {
+        ...data,
+        info,
+    });
 }

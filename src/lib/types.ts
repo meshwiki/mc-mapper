@@ -80,6 +80,22 @@ export interface LogRxData {
     raw: Uint8Array;
 }
 
+export interface SelfInfo {
+    type: number;
+    txPower: number;
+    maxTxPower: number;
+    publicKey: string;
+    advLat: number;
+    advLon: number;
+    reserved: string;
+    manualAddContacts: number;
+    radioFreq: number;
+    radioBw: number;
+    radioSf: number;
+    radioCr: number;
+    name: string;
+}
+
 export interface LogRxDetails {
     rssi: number;
 
