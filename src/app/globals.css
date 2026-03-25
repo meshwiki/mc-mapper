@@ -40,7 +40,16 @@ body {
 button {
     padding: 4px 8px;
     border-radius: 4px;
-    border: 1px solid silver;
+    /* border: 1px solid silver; */
+    border: none;
+    box-shadow: 0 0 0 2px #0000001a;
+    background: white;
+    height: 30px;
+}
+
+.maplibregl-ctrl-group button {
+    border-radius: 0;
+    box-shadow: none;
 }
 
 table {
