@@ -111,7 +111,6 @@ export interface SelfInfo {
 
 export interface LogRxDetails {
     rssi: number;
-
     snr: number;
     noiseFloor: number;
     routeType: string;
@@ -127,6 +126,7 @@ export interface LogRxDetails {
 }
 
 export interface RxLog extends LogRxDetails {
+    sessionId: string;
     location?: {
         latitude?: number;
         longitude?: number;

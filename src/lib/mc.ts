@@ -31,6 +31,7 @@ export function useMc() {
     const [conn, setConn] = React.useState<WebBleConnection | null>(null);
     const [info, setInfo] = React.useState<SelfInfo | null>(null);
     const [stats, setStats] = React.useState<Stats<StatsRadio> | null>(null);
+    const [sessionId, setSessionId] = React.useState<string>("");
 
     const connect = React.useCallback(async () => {
         try {
@@ -44,6 +45,10 @@ export function useMc() {
                     publicKey: toHex(info.publicKey),
                     reserved: toHex(info.reserved),
                 });
+                // sessionId to random 8 char hex string
+                setSessionId(
+                    `${Date.now()}-${Math.random().toString(16).slice(2, 10)}`
+                );
             });
 
             // connection.on("rx", (message: Uint8Array) => {
@@ -93,6 +98,7 @@ export function useMc() {
     }, [conn]);
 
     return {
+        sessionId,
         info,
         last,
         stats,
