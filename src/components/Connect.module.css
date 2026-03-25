@@ -8,10 +8,10 @@
     justify-content: start;
     /* align-items: start; */
     z-index: 10;
+    pointer-events: none;
 }
 
 .ConnectOverlay.withStats {
-    background-color: rgba(0, 0, 0, 0.7);
     height: 100%;
 }
 
@@ -20,8 +20,19 @@
     flex-direction: row;
     gap: 8px;
     padding: 10px;
-    padding-right: 50px;
+    margin-right: 40px;
+    pointer-events: initial;
 }
 .Stats {
     flex: 1;
+    pointer-events: initial;
+    background-color: rgba(255, 255, 255, 0.7);
+    color: #333;
+    /* border: 2px solid white; */
+    margin: 10px;
+    margin-right: 50px;
+    margin-top: 0px;
+    border-radius: 4px;
+    box-shadow: 0 0 0 2px #0000001a;
+    padding: 8px;
 }

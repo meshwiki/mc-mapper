@@ -69,7 +69,7 @@ function buildMeshes(
         geometry.setPositions([0, 0, 0, 0, 0, heightMeters]);
         const material = new LineMaterial({
             color: rssiToColor(d.rssi),
-            linewidth: 4, // 2 CSS pixels
+            linewidth: 2, // 2 CSS pixels
             worldUnits: false, // keep width constant on screen
             transparent: true,
             opacity: 1,
@@ -205,6 +205,27 @@ export default function RSSIMap({ data }: MapProps) {
                     top: 0,
                     right: 0,
                     bottom: 0,
+                }}
+                maxPitch={85}
+                sky={{
+                    // "sky-color": "#199EF3",
+                    "sky-color": "#88C6FC",
+                    "sky-horizon-blend": 0.5,
+                    "horizon-color": "#ffffff",
+                    "horizon-fog-blend": 0.5,
+                    "fog-color": "#0000ff",
+                    "fog-ground-blend": 0.5,
+                    "atmosphere-blend": [
+                        "interpolate",
+                        ["linear"],
+                        ["zoom"],
+                        0,
+                        1,
+                        10,
+                        1,
+                        12,
+                        0,
+                    ],
                 }}
                 mapStyle="https://api.maptiler.com/maps/dataviz-v4/style.json?key=LKEbKWkHg8HwYhK8Gsco"
                 onLoad={handleMapLoad}

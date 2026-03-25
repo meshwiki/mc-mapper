@@ -11,6 +11,7 @@ import { useRxStats } from "@/hooks/useRxStats";
 import { useGeoLocation } from "@/hooks/useGeoLocation";
 
 import styles from "./Connect.module.css";
+import { MdBluetoothConnected, MdQueryStats } from "react-icons/md";
 
 interface ConnectProps {}
 export function Connect({}: ConnectProps) {
@@ -63,7 +64,8 @@ export function Connect({}: ConnectProps) {
             <div className={styles.Controls}>
                 {!connected && (
                     <button onClick={connect}>
-                        Connect to Meshcore Device
+                        <MdBluetoothConnected size={20} />
+                        Connect
                     </button>
                 )}
                 {!!connected && (
@@ -71,7 +73,7 @@ export function Connect({}: ConnectProps) {
                 )}
                 <div className="flex"></div>
                 <button onClick={() => setShowStats(!showStats)}>
-                    Toggle stats
+                    <MdQueryStats size={20} />
                 </button>
             </div>
             {showStats && (
