@@ -1,5 +1,5 @@
 "use server";
-import { RxLog, SelfInfo } from "@/lib/types";
+import { RssiDatum, RxLog, SelfInfo } from "@/lib/types";
 import crate from "node-crate";
 
 // using node-crate
@@ -26,13 +26,13 @@ function connect() {
 //     return client;
 // }
 
-export async function getData(): Promise<any[]> {
+export async function getData(): Promise<RssiDatum[]> {
     const crateClient = connect();
 
     const res = await crateClient.execute(
         `SELECT id, rssi, snr, stamp, "lastRepeater", location['latitude'] as lat, location['longitude'] as lng  FROM doc.rxlog`
     );
-    return res.json;
+    return res.json as RssiDatum[];
 }
 
 export async function pushData(data: RxLog, info: SelfInfo | null) {

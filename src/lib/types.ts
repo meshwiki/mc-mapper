@@ -138,3 +138,13 @@ export interface RxLog extends LogRxDetails {
     };
     stamp: string;
 }
+
+export type RssiDatum = {
+    id: string;
+    rssi: number;
+    snr: number;
+    stamp: string;
+    lastRepeater: string;
+    lat: number;
+    lng: number;
+};
