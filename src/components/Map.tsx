@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Map, { MapRef, NavigationControl } from "react-map-gl/maplibre";
-import maplibregl, { MapLibreEvent } from "maplibre-gl";
+import maplibregl, { MapLibreEvent, SkySpecification } from "maplibre-gl";
 import { MdLocationSearching, MdMyLocation } from "react-icons/md";
 
 import { useGeoLocation } from "@/hooks/useGeoLocation";
@@ -11,6 +11,27 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import styles from "./Map.module.css";
 import { RssiDatum } from "@/lib/types";
 import { RssiData } from "./Layers/RssiData";
+
+const skyStyle: SkySpecification = {
+    // "sky-color": "#199EF3",
+    "sky-color": "#88C6FC",
+    "sky-horizon-blend": 0.5,
+    "horizon-color": "#ffffff",
+    "horizon-fog-blend": 0.5,
+    "fog-color": "#0000ff",
+    "fog-ground-blend": 0.5,
+    "atmosphere-blend": [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        0,
+        1,
+        10,
+        1,
+        12,
+        0,
+    ],
+};
 
 type MapProps = {
     data: RssiDatum[];
@@ -23,12 +44,14 @@ export default function RSSIMap({ data }: MapProps) {
     const handleMapLoad = React.useCallback((e: MapLibreEvent) => {
         const map = e.target;
 
+        // break snap when user interacts with the map
         map.on("drag", () => {
             setSnapped(false);
         });
     }, []);
 
     React.useEffect(() => {
+        // fly to current location when it changes, but only if we're snapped to it
         if (location && mapRef.current && snapped) {
             mapRef.current.flyTo({
                 center: [location.coords.longitude, location.coords.latitude],
@@ -57,26 +80,7 @@ export default function RSSIMap({ data }: MapProps) {
                     bottom: 0,
                 }}
                 maxPitch={85}
-                sky={{
-                    // "sky-color": "#199EF3",
-                    "sky-color": "#88C6FC",
-                    "sky-horizon-blend": 0.5,
-                    "horizon-color": "#ffffff",
-                    "horizon-fog-blend": 0.5,
-                    "fog-color": "#0000ff",
-                    "fog-ground-blend": 0.5,
-                    "atmosphere-blend": [
-                        "interpolate",
-                        ["linear"],
-                        ["zoom"],
-                        0,
-                        1,
-                        10,
-                        1,
-                        12,
-                        0,
-                    ],
-                }}
+                sky={skyStyle}
                 mapStyle="https://api.maptiler.com/maps/dataviz-v4/style.json?key=LKEbKWkHg8HwYhK8Gsco"
                 onLoad={handleMapLoad}
             >
