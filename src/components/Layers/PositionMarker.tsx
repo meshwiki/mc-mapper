@@ -2,12 +2,11 @@ import React from "react";
 import * as turf from "@turf/turf";
 import { MapInstance, useMap } from "react-map-gl/maplibre";
 
-function updateLocationLayer(
-    map: MapInstance,
-    lng: number,
-    lat: number,
-    accuracyMeters: number
-) {
+function updateLocationLayer(map: MapInstance, location: GeolocationPosition) {
+    const lng = location.coords.longitude;
+    const lat = location.coords.latitude;
+    const accuracyMeters = location.coords.accuracy ?? 0;
+
     const pointSourceId = "current-location-point";
     const accuracySourceId = "current-location-accuracy";
     const accuracyFillLayerId = "current-location-accuracy-fill";
@@ -107,18 +106,35 @@ interface PositionMarkerProps {
 export function PositionMarker({ location }: PositionMarkerProps) {
     const { current } = useMap();
 
+    // update when location changes
     React.useEffect(() => {
         let map = current?.getMap();
         if (!map || !location) return;
         if (!map.isStyleLoaded()) return;
 
-        updateLocationLayer(
-            map,
-            location.coords.longitude,
-            location.coords.latitude,
-            location.coords.accuracy ?? 0
-        );
-    }, [location, current?.getMap()]);
+        updateLocationLayer(map, location);
+    }, [location]);
+
+    // update when map loads
+    React.useEffect(() => {
+        let map = current?.getMap();
+        if (!map) return;
+
+        const onLoad = () => {
+            if (!location) return;
+            if (!map.isStyleLoaded()) return;
+            updateLocationLayer(map, location);
+        };
+
+        if (map.loaded()) {
+            onLoad();
+        } else {
+            map.on("load", onLoad);
+            return () => {
+                map.off("load", onLoad);
+            };
+        }
+    }, [current]);
 
     return null;
 }
