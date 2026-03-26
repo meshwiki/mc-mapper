@@ -20,8 +20,8 @@ function rssiToHeight(rssi: number) {
 
 function rssiToColor(rssi: number) {
     const t = (rssi + 120) / 90;
-    const r = Math.round(255 * (1 - t));
-    const g = Math.round(255 * t);
+    const r = Math.max(0, Math.min(255, Math.round(255 * (1 - t))));
+    const g = Math.max(0, Math.min(255, Math.round(255 * t)));
     return (r << 16) | (g << 8);
 }
 
