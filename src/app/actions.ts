@@ -32,6 +32,7 @@ export async function getData(): Promise<RssiDatum[]> {
     const res = await crateClient.execute(
         `SELECT id, rssi, snr, stamp, "lastRepeater", location['latitude'] as lat, location['longitude'] as lng  FROM doc.rxlog`
     );
+    console.log("Fetched data from CrateDB:", res.json.length, "records");
     return res.json as RssiDatum[];
 }
 
