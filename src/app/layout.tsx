@@ -27,7 +27,8 @@ export default function RootLayout({
             lang="en"
             className={`${geistSans.variable} ${geistMono.variable}`}
         >
-            <body>{children}</body>
+            {/* suppress hydration warning caused by chrome plugins adding extra classNames to the body */}
+            <body suppressHydrationWarning>{children}</body>
         </html>
     );
 }
