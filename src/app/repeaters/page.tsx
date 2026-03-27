@@ -1,8 +1,11 @@
+import { Suspense } from "react";
+import { Advert as AdvertClass } from "@liamcottle/meshcore.js";
+
 import { connect } from "@/lib/crate";
 import { fromHex, toHex } from "@/lib/parsers/RxData";
 import { Advert, RxLog } from "@/lib/types";
 import { RepeaterTable } from "./table";
-import { Advert as AdvertClass } from "@liamcottle/meshcore.js";
+import { cacheLife } from "next/cache";
 
 function parseRepeater(log: RxLog) {
     let payload = fromHex(log.payload);
@@ -16,8 +19,10 @@ function parseRepeater(log: RxLog) {
     }
 }
 
-export async function getData() {
+async function getData() {
     // noStore();
+    "use cache";
+    cacheLife("minutes");
     const crateClient = connect();
 
     const res = await crateClient.execute(
@@ -46,7 +51,9 @@ export default async function () {
     return (
         <div className="datapage">
             <h1>Repeaters</h1>
-            <RepeaterTable repeaters={repeaters} />
+            <Suspense fallback={<div>Loading...</div>}>
+                <RepeaterTable repeaters={repeaters} />
+            </Suspense>
         </div>
     );
 }
