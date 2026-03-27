@@ -1,6 +1,8 @@
 "use server";
+import "server-only";
 import { RssiDatum, RxLog, SelfInfo } from "@/lib/types";
 import crate from "node-crate";
+import { cacheLife } from "next/cache";
 
 // using node-crate
 function connect() {
@@ -27,6 +29,9 @@ function connect() {
 // }
 
 export async function getData(): Promise<RssiDatum[]> {
+    // noStore();
+    "use cache";
+    cacheLife("minutes");
     const crateClient = connect();
 
     const res = await crateClient.execute(
