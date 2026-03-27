@@ -43,6 +43,7 @@ button {
     align-items: center;
     cursor: pointer;
     font-size: 13.3px;
+    color: currentColor;
 }
 
 .maplibregl-ctrl-group button {
