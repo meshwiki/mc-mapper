@@ -37,3 +37,15 @@
     padding: 8px;
     overflow: auto;
 }
+
+.LastPreview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* border: 1px solid red; */
+    box-shadow: 0 0 0 2px #0000001a;
+    background-color: white;
+    border-radius: 100px;
+    padding: 4px 16px;
+    font-size: 13.3px;
+}

@@ -79,7 +79,13 @@ export function Connect({ onData }: ConnectProps) {
                 {!!connected && (
                     <button onClick={disconnect}>Disconnect</button>
                 )}
-                <div className="flex"></div>
+                <div className="flex" />
+                {last && (
+                    <div className={styles.LastPreview}>
+                        {last.lastRepeater} - {last.rssi}dB
+                    </div>
+                )}
+                <div className="flex" />
                 <button onClick={() => setShowStats(!showStats)}>
                     <MdQueryStats size={20} />
                 </button>
