@@ -95,7 +95,7 @@ export function Connect({ onData }: ConnectProps) {
                     <StatsTable
                         title="Messages by Type"
                         stats={rxstats.byType}
-                        bin="hops"
+                        bin="type"
                         columns={["total"]}
                     />
                     <StatsTable
