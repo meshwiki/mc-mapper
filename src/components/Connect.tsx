@@ -82,7 +82,7 @@ export function Connect({ onData }: ConnectProps) {
                 <div className="flex" />
                 {last && (
                     <div className={styles.LastPreview}>
-                        {last.lastRepeater} - {last.rssi}dB
+                        {last.lastRepeater}: {last.rssi}dB
                     </div>
                 )}
                 <div className="flex" />
