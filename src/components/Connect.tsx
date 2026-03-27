@@ -42,7 +42,7 @@ export function Connect({ onData }: ConnectProps) {
     React.useEffect(() => {
         if (last) {
             const loc = { ...location?.coords.toJSON() };
-            console.log("location", loc);
+            // console.log("location", loc);
             const data: RxLog = {
                 sessionId,
                 ...last,
