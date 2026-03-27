@@ -1,24 +1,27 @@
 import React from "react";
 
-export function useGeoLocation() {
+interface UseGeoLOcationOptions {
+    enableHighAccuracy?: boolean;
+    enabled?: boolean;
+}
+
+export function useGeoLocation(options: UseGeoLOcationOptions = {}) {
     const [location, setLocation] = React.useState<GeolocationPosition | null>(
-        null
+        null,
     );
 
     React.useEffect(() => {
-        if (navigator.geolocation) {
+        if (navigator.geolocation && options.enabled !== false) {
             const id = navigator.geolocation.watchPosition(
                 (position) => {
                     setLocation(position);
                 },
                 null,
-                { enableHighAccuracy: true }
+                { enableHighAccuracy: options.enableHighAccuracy ?? true },
             );
             return () => navigator.geolocation.clearWatch(id);
-        } else {
-            console.error("Geolocation is not supported by this browser.");
         }
-    }, []);
+    }, [options.enabled, options.enableHighAccuracy]);
 
     return location;
 }

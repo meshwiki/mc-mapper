@@ -2,6 +2,7 @@
 
 import React from "react";
 import classNames from "classnames";
+import { MdBluetoothConnected, MdQueryStats } from "react-icons/md";
 
 import { useMc } from "@/lib/mc";
 import { RxLog } from "@/lib/types";
@@ -9,20 +10,21 @@ import { StatsTable } from "./StatsTable";
 import { pushData } from "@/app/actions";
 import { useRxStats } from "@/hooks/useRxStats";
 import { useGeoLocation } from "@/hooks/useGeoLocation";
+import { useWakeLock } from "@/hooks/useWakeLock";
 
 import styles from "./Connect.module.css";
-import { MdBluetoothConnected, MdQueryStats } from "react-icons/md";
 
 interface ConnectProps {
     onData?: (data: RxLog) => void;
 }
 export function Connect({ onData }: ConnectProps) {
     const [log, setLog] = React.useState<string[]>([]);
-    const location = useGeoLocation();
-    const [showStats, setShowStats] = React.useState(false);
-
     const { connect, connected, last, info, disconnect, stats, sessionId } =
         useMc();
+    const location = useGeoLocation({ enabled: connected });
+    useWakeLock({ enabled: connected });
+    const [showStats, setShowStats] = React.useState(false);
+
     const rxstats = useRxStats(last);
 
     function appendLog(message: string) {
