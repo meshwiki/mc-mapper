@@ -13,6 +13,10 @@ export function toHex(buffer: Uint8Array) {
         .join(" ");
 }
 
+export function fromHex(hex: string) {
+    return new Uint8Array(hex.split(" ").map((byte) => parseInt(byte, 16)));
+}
+
 export function parseRxData(data: LogRxData): LogRxDetails {
     const nf = data.lastRssi - 4 * data.lastSnr;
 

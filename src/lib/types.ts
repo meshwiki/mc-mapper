@@ -148,3 +148,18 @@ export type RssiDatum = {
     lat: number;
     lng: number;
 };
+
+export type Advert = {
+    publicKey: Uint8Array;
+    timestamp: number;
+    signature: Uint8Array;
+    appData: Uint8Array;
+    parsed: {
+        name: string;
+        lat: number;
+        lon: number;
+        type: string;
+        feat1: number;
+        feat2: number;
+    };
+};
