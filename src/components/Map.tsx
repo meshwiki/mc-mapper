@@ -35,10 +35,11 @@ const skyStyle: SkySpecification = {
 
 type MapProps = {
     data: RssiDatum[];
+    connected: boolean;
 };
-export default function RSSIMap({ data }: MapProps) {
+export default function RSSIMap({ data, connected }: MapProps) {
     const mapRef = React.useRef<MapRef | null>(null);
-    const location = useGeoLocation();
+    const location = useGeoLocation({ enableHighAccuracy: connected });
     const [snapped, setSnapped] = React.useState(true);
 
     const handleMapLoad = React.useCallback((e: MapLibreEvent) => {

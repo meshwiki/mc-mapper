@@ -9,6 +9,7 @@ interface MainViewProps {
 }
 export function MainView({ data }: MainViewProps) {
     let [inner, setInner] = useInner(data);
+    let [connected, setConnected] = useInner(false);
 
     function handleDirectData(rxData: any) {
         setInner((prev) => [
@@ -25,8 +26,8 @@ export function MainView({ data }: MainViewProps) {
     }
     return (
         <div className="col flex">
-            <Connect onData={handleDirectData} />
-            <RSSIMap data={inner} />
+            <Connect onData={handleDirectData} onConnected={setConnected} />
+            <RSSIMap data={inner} connected={connected} />
         </div>
     );
 }

@@ -16,8 +16,9 @@ import styles from "./Connect.module.css";
 
 interface ConnectProps {
     onData?: (data: RxLog) => void;
+    onConnected?: (connected: boolean) => void;
 }
-export function Connect({ onData }: ConnectProps) {
+export function Connect({ onData, onConnected }: ConnectProps) {
     const [log, setLog] = React.useState<string[]>([]);
     const { connect, connected, last, info, disconnect, stats, sessionId } =
         useMc();
@@ -37,6 +38,7 @@ export function Connect({ onData }: ConnectProps) {
         } else {
             appendLog("Disconnected from meshcore device");
         }
+        onConnected?.(connected);
     }, [connected]);
 
     React.useEffect(() => {
